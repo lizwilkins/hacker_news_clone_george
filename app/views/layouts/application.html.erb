@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Hacker News Clone | <%= yield :title %> </title>
+  <%= stylesheet_link_tag    "application", :media => "all" %>
+  <%= javascript_include_tag "application" %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+<h1>Hacker News Clone - <%= yield :title %></h1>
+<%= flash[:notice] %>
+<%= flash[:alert] %>
+<%= yield %>
+
+</body>
+</html>

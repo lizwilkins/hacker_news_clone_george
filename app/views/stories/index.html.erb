@@ -1,0 +1,18 @@
+<% provide :title, "New story" %>
+
+<h2>A collection of user-submitted news items.</h2>
+
+<table>
+  <tr>
+    <td>Title</td>
+    <td>URL</td>
+  </tr>
+  <% @stories.each do |story| %>
+    <tr>
+      <td><%= story.title %></td>
+      <td><%= story.url %></td>
+    </tr>
+  <% end %>
+</table>
+
+<p><%= link_to 'Add story', new_story_path %></p>
