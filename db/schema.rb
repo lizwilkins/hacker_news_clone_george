@@ -11,11 +11,25 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130401164448) do
+ActiveRecord::Schema.define(:version => 20130401232524) do
+
+  create_table "comments", :force => true do |t|
+    t.string   "text"
+    t.integer  "story_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "stories", :force => true do |t|
     t.string   "title"
     t.string   "url"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "story_comments", :force => true do |t|
+    t.integer  "comment_id"
+    t.integer  "story_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end

@@ -3,15 +3,19 @@
 <h2>A collection of user-submitted news items.</h2>
 
 <table>
-  <tr>
-    <td>Title</td>
-    <td>URL</td>
-  </tr>
-  <% @stories.each do |story| %>
-    <tr>
-      <td><%= story.title %></td>
-      <td><%= story.url %></td>
-    </tr>
+
+  <% @stories.sort_by(&:created_at).reverse.each do |story| %>
+      <tr><td><%= story.title %></td><td><%= 'Posted at: ' + story.created_at.strftime("%m/%d/%Y- %H:%M - ") %></td></tr>
+
+      <% @comments.sort_by(&:created_at).reverse.each do |comment| %>
+        <% if comment.id == story.id %>  
+          <tr>
+            <td><%= "...Posted at: " + comment.created_at.strftime("%m/%d/%Y- %H:%M - ") %></td>
+            <td><%= comment.text %></td>
+          </tr>
+        <% end %>
+      <% end %>
+      <tr><p><%= link_to '...Add a comment', new_comment_path %></p><tr>
   <% end %>
 </table>
 

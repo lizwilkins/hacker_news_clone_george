@@ -1,10 +1,11 @@
 require 'spec_helper'
 
 describe StoriesController do 
+  let(:story) {Story.create({:title => 'Old title', :url => 'http://reallylame.com'})}
+
   context 'routing' do
     it {should route(:get, '/stories/new').to :action => :new}
     it {should route(:post, '/stories').to :action => :create}
-    it {should route(:get, '/stories/1').to :action => :show, :id => 1}
     it {should route(:get, '/stories/1/edit').to :action => :edit, :id => 1}
     it {should route(:put, '/stories/1').to :action => :update, :id => 1}
     it {should route(:delete, '/stories/1').to :action => :destroy, :id => 1}
@@ -23,6 +24,8 @@ describe StoriesController do
       before {post :create, valid_parameters}
       it {should redirect_to new_story_path}
       it {should set_the_flash[:notice]}
+      it {should respond_with 302}
+
     end
 
     context 'with invalid parameters' do
@@ -31,7 +34,13 @@ describe StoriesController do
       before {post :create, invalid_parameters}
 
       it {should render_template :new}
+
     end    
+  end
+
+  context 'GET edit' do
+    before {get :edit, :id => story.id}
+    it {should render_template :edit}
   end
 
   context 'GET new' do
@@ -46,9 +55,14 @@ describe StoriesController do
     it {should render_template :index}
   end  
 
-  context 'PUT update' do
-    let(:story) {Story.create({:title => 'Old title', :url => 'http://reallylame.com'})}
+  context 'DELETE destroy' do
+    it 'destroys a story' do
+      story_to_destroy = story
+      expect {delete :destroy, {:id => story_to_destroy.id}}.to change(Story, :count).by(-1)
+    end
+  end
 
+  context 'PUT update' do
     let(:valid_attributes) {{:title => 'Better title', :url => 'http://muchcooler.com'}}
     let(:valid_parameters) {{:id => story.id, :story => valid_attributes}}
     before {put :update, valid_parameters}
@@ -57,6 +71,7 @@ describe StoriesController do
       Story.find(story.id).title.should eq valid_attributes[:title]
     end
 
-    it {should respond_with 200}
+
+    it {should respond_with 302}
   end
 end

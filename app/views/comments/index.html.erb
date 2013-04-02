@@ -1,0 +1,22 @@
+<% provide :title, "New comment" %>
+
+<h2>Comments about this item...</h2>
+
+<table>
+  <tr>
+    <td>Posted</td>
+    <td> </td>
+    <td>Comment</td>
+  </tr>
+  <% @comments.sort_by(&:created_at).reverse.each do |comment| %>
+    <tr>
+      <td><%= comment.created_at.strftime("%m/%d/%Y- %H:%M - ") %></td>
+      <td><%= comment.text %></td>
+      <td> </td>
+      <td><p><%= link_to 'Change', edit_comment_path(comment) %></p> </td>
+      <td><%= link_to 'Delete', comment, :method => :delete, :data => { :confirm => 'Are you sure?' } %></td>
+    </tr>
+  <% end %>
+</table>
+
+<p><%= link_to 'Add comment', new_comment_path %></p>
