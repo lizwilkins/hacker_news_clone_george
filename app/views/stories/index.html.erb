@@ -5,17 +5,24 @@
 <table>
 
   <% @stories.sort_by(&:created_at).reverse.each do |story| %>
-      <tr><td><%= story.title %></td><td><%= 'Posted at: ' + story.created_at.strftime("%m/%d/%Y- %H:%M - ") %></td></tr>
+      <tr>
+        <td><%= story.id.to_s + '--' + story.title %></td><td><%= 'Posted at: ' + story.created_at.strftime("%m/%d/%Y- %H:%M - ") %></td>
+        <td><p><%= link_to 'Edit Story', edit_story_path(story) %></p></td>
+        <td><p><%= link_to 'Add a comment', new_story_comment_path(story) %></p></td> 
+      </tr>
 
-      <% @comments.sort_by(&:created_at).reverse.each do |comment| %>
-        <% if comment.id == story.id %>  
+      <% story.comments.sort_by(&:created_at).reverse.each do |comment| %>
+        <% if comment.story_id == story.id %>  
           <tr>
-            <td><%= "...Posted at: " + comment.created_at.strftime("%m/%d/%Y- %H:%M - ") %></td>
-            <td><%= comment.text %></td>
+            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%= comment.story_id.to_s + ' -- ' + comment.text %></td>
+            <td><%= "Posted at: " + comment.created_at.strftime("%m/%d/%Y- %H:%M - ") %></td>
+           <td><p><%= link_to 'Edit comment', edit_story_comment_path(story, comment) %></p></td>
           </tr>
         <% end %>
       <% end %>
-      <tr><p><%= link_to '...Add a comment', new_comment_path %></p><tr>
+
+
+      <tr><tr>
   <% end %>
 </table>
 

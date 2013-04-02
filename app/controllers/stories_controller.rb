@@ -12,7 +12,7 @@ class StoriesController < ApplicationController
 
     if @story.save
       flash[:notice] = "Your story was successfully created."
-      redirect_to new_story_path
+      redirect_to root_path
     else
       render :new
     end

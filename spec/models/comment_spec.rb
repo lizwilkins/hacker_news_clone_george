@@ -6,6 +6,9 @@ describe Comment do
     it {should validate_presence_of :story_id}
     it {should allow_mass_assignment_of :text}
     it {should allow_mass_assignment_of :story_id}
-
   end
+
+  context 'associations' do
+    it {should belong_to(:story)}
+  end  
 end

@@ -1,6 +1,9 @@
 HackerNews::Application.routes.draw do
-  resources :stories, :except => :show
-  resources :comments, :except => :show
+
+  resources :stories, :except => :show do  
+    resources :comments, :except => :show
+  end
+
   root :to => 'stories#index'
 
   # The priority is based upon order of creation:

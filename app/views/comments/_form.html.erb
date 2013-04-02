@@ -7,7 +7,7 @@
   </ul>
 <% end %>
 
-<%= form_for @comment do |f| %>
+<%= form_for [@comment.story, @comment] do |f| %>
   <%= f.label :text %>
   <%= f.text_field :text %>
   <%= f.label :story_id %>

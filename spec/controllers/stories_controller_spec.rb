@@ -63,7 +63,7 @@ describe StoriesController do
   end
 
   context 'PUT update' do
-    let(:valid_attributes) {{:title => 'Better title', :url => 'http://muchcooler.com'}}
+    let(:valid_attributes) {{:title => 'Better Title', :url => 'http://muchcooler.com'}}
     let(:valid_parameters) {{:id => story.id, :story => valid_attributes}}
     before {put :update, valid_parameters}
 
