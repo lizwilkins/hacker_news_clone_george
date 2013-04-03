@@ -1,4 +1,7 @@
 class StoriesController < ApplicationController
+
+  before_filter :authorize, only: [:edit, :update, :new]
+
   def new
     @story = Story.new
   end
@@ -36,7 +39,7 @@ class StoriesController < ApplicationController
       flash[:notice] = "Your story was successfully updated."
       redirect_to root_path
     else
-      render :update
+      render :edit
     end 
   end 
 

@@ -1,8 +1,15 @@
 HackerNews::Application.routes.draw do
-
   resources :stories, :except => :show do  
     resources :comments, :except => :show
   end
+
+  get 'signup', to: 'users#new', as: 'signup'
+  get 'login', to: 'sessions#new', as: 'login'
+  delete 'logout', to: 'sessions#destroy', as: 'logout'
+  
+  resources :sessions, :except => :show, :except => :index
+  resources :users, :except => :show, :except => :index
+
 
   root :to => 'stories#index'
 

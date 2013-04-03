@@ -6,6 +6,7 @@ describe CommentsController do
     story
     Comment.create({:text => 'This link really sucked. I want my money back.', :story_id => story.id})
   end
+  let(:user) {User.create({:email => 'whatever@email.com', :password => 'reallgreat231212', :password_confirmation => 'reallgreat231212'})}
 
   context 'routing' do
     # it {should route(:get, '/comments/new').to :action => :new}
@@ -32,8 +33,8 @@ describe CommentsController do
         expect {post :create, valid_parameters}.to change(Comment, :count).by(1)
       end
 
-      before {post :create, valid_parameters}
-      it {should redirect_to new_story_comment_path}
+      before {post :create, valid_parameters, {:user_id => user.id}}
+      it {should redirect_to root_path}
       it {should set_the_flash[:notice]}
       it {should respond_with 302}
 
